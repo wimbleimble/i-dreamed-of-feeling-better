@@ -1,0 +1,14 @@
+{
+	"files.associations": {
+		"*.rasi": "css",
+		"*.tcc": "cpp",
+		"unordered_map": "cpp",
+		"fstream": "cpp",
+		"istream": "cpp",
+		"numeric": "cpp",
+		"ostream": "cpp",
+		"sstream": "cpp",
+		"string_view": "c",
+		"system_error": "c"
+	}
+}
