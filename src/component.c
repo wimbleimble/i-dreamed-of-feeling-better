@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
+#include <stdio.h>
 
 bool component_array_init(
 	ComponentArray* array,
-	size_t component_size,
-	SystemType subscriptions)
+	ComponentType type)
 {
+	size_t component_size = COMPONENT_SIZES[type];
 	array->entity_to_index = calloc(MAX_ENTITIES, sizeof(size_t));
 	array->index_to_entity = calloc(MAX_ENTITIES, sizeof(Entity));
 	array->array = calloc(MAX_ENTITIES, component_size);
@@ -18,7 +19,7 @@ bool component_array_init(
 		return false;
 
 	array->component_size = component_size;
-	array->subscriptions = subscriptions;
+	array->type = type;
 	return true;
 }
 
@@ -52,9 +53,23 @@ void* component_array_append(ComponentArray* array, void* component, Entity enti
 	return new_comp;
 }
 
-void* component_array_remove(ComponentArray* array, Entity entity)
+void component_array_remove(ComponentArray* array, Entity entity)
 {
-	printf("Implement component array removinggsgssgsg!!!!!");
+	// TODO Implement me.
+	printf("Removing component %u for entity %u\n", array->type, entity);
+}
+
+void component_entity_destroy(
+	ComponentData* component_data, Entity entity, ComponentSignature signature)
+{
+	// NOTE: signature is mutated.
+	for (ComponentType type = 0; type < NUM_COMPONENTS; ++type)
+	{
+		// hehe bitwise shit
+		signature = signature >> type;
+		if (signature & (ComponentSignature)1)
+			component_array_remove(&(component_data->components[type]), entity);
+	}
 }
 
 
@@ -71,10 +86,6 @@ bool component_init(ComponentData* component_data)
 {
 	for (ComponentType type = 0; type < NUM_COMPONENTS; ++type)
 	{
-		component_array_init(
-			&(component_data->components[type]),
-			COMPONENT_SIZES[type],
-			SUBSCRIPTIONS[type]
-		);
+		component_array_init(&(component_data->components[type]), type);
 	}
 }

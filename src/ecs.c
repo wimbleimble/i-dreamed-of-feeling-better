@@ -11,8 +11,9 @@ bool ecs_init(ECS* ecs)
 
 bool ecs_destroy_entity(ECS* ecs, Entity entity)
 {
+	ComponentSignature signature = entity_signature(&(ecs->entity_data), entity);
+	component_entity_destroy(&(ecs->component_data), entity, signature);
 	entity_destroy(&(ecs->entity_data), entity);
-	component_entity_destroy(&(ecs->component_data), entity);
 }
 
 Entity ecs_create_entity(ECS* ecs)

@@ -9,11 +9,10 @@ typedef struct ComponentArray
 {
 	size_t component_size;
 	size_t num_components;
-	SystemType subscriptions;
+	ComponentType type;
 	void* array;
 	size_t* entity_to_index;
 	Entity* index_to_entity;
-	ComponentType type;
 } ComponentArray;
 
 typedef struct ComponentData
@@ -25,6 +24,7 @@ bool component_init(ComponentData* component_data);
 void* component_new(ComponentType type, void* compoenent);
 void* component_array_append(ComponentArray* array, void* component, Entity entity);
 void* component_array_get(ComponentArray* array, Entity entity);
+void component_entity_destroy(ComponentData* component_data, Entity entity, ComponentSignature signature);
 
 #define COMP_SIG(type) ((ComponentSignature)(1UL << type))
 #endif

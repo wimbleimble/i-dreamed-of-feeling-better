@@ -1,9 +1,22 @@
 #include <stdio.h>
 #include "ecs.h"
 #include "entity.h"
+#include "renderer.h"
+#include "resource_manager.h"
 
 int main()
 {
+	RenderContext render_context = {};
+	renderer_init(&render_context,
+		"I Dreamed of Feeling Better", 200, 200, SDL_WINDOW_OPENGL);
+
+	Resources resources = {};
+	// Currently does nothing
+	resource_init(&resources);
+	resource_set_shader_capacity(&resources, 1);
+	ShaderProgram shader = resource_load_shader(
+		&resources, "shaders/sprite.vert", "shaders/sprite.frag");
+
 	ECS ecs = { 0 };
 	ecs_init(&ecs);
 

@@ -9,6 +9,8 @@
 		"ostream": "cpp",
 		"sstream": "cpp",
 		"string_view": "c",
-		"system_error": "c"
+		"system_error": "c",
+		"component_defs.h": "c",
+		"ecs.h": "c"
 	}
 }

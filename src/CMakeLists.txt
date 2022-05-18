@@ -16,7 +16,10 @@ set(src
 	ecs.c
 	entity.c
 	component.c
-	component_defs.c)
+	component_defs.c
+	renderer.c
+	resource_manager.c
+	shader.c)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_Image REQUIRED) 
@@ -31,6 +34,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../include/")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../include/components")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../include/renderer")
 target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_INCLUDE_DIRS})
 target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
 
