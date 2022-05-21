@@ -11,6 +11,16 @@
 		"string_view": "c",
 		"system_error": "c",
 		"component_defs.h": "c",
-		"ecs.h": "c"
+		"ecs.h": "c",
+		"deque": "c",
+		"list": "c",
+		"string": "c",
+		"vector": "c",
+		"functional": "c",
+		"texture.h": "c",
+		"cglm.h": "c",
+		"vec2.h": "c",
+		"common.h": "c",
+		"vec2-ext.h": "c"
 	}
 }

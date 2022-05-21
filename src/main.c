@@ -3,20 +3,12 @@
 #include "entity.h"
 #include "renderer.h"
 #include "resource_manager.h"
+#include "texture.h"
+#include <assert.h>
+#include "cglm/cglm.h"
 
-int main()
+void test_ecs()
 {
-	RenderContext render_context = {};
-	renderer_init(&render_context,
-		"I Dreamed of Feeling Better", 200, 200, SDL_WINDOW_OPENGL);
-
-	Resources resources = {};
-	// Currently does nothing
-	resource_init(&resources);
-	resource_set_shader_capacity(&resources, 1);
-	ShaderProgram shader = resource_load_shader(
-		&resources, "shaders/sprite.vert", "shaders/sprite.frag");
-
 	ECS ecs = { 0 };
 	ecs_init(&ecs);
 
@@ -54,7 +46,58 @@ int main()
 	ecs_destroy_entity(&ecs, ents[1]);
 	ecs_destroy_entity(&ecs, ents[2]);
 
+}
+
+int main()
+{
+	RenderContext render_context = {};
+	assert(renderer_init(&render_context,
+		"I Dreamed of Feeling Better", 800, 600, SDL_WINDOW_OPENGL));
+
+	Resources resources = {};
+	// Currently does nothing
+	resource_init(&resources);
+	resource_set_shader_capacity(&resources, 1);
+	resource_set_texture_capacity(&resources, 1);
+	renderer_set_clear_colour(1.0, 1.0, 1.0, 1.0);
+	ShaderProgram shader = resource_load_shader(
+		&resources, "shaders/sprite.vert", "shaders/sprite.frag");
+
+	Texture bla_texture =
+		resource_load_texture(&resources, "sprites/bla.png", true);
+
+	bool run = true;
+	while (run)
+	{
+		SDL_Event event;
+		while (SDL_PollEvent(&event))
+		{
+			if (event.type == SDL_KEYDOWN)
+			{
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					run = false;
+					break;
+				default:
+					break;
+				}
+			}
+			else if (event.type == SDL_QUIT)
+				run = false;
+		}
+		renderer_clear();
+		vec2 pos = { 0.0f, 0.0f };
+		vec2 size = { 200.0f, 200.0f };
+		renderer_draw_2D_texture(
+			&render_context,
+			bla_texture,
+			shader,
+			pos,
+			size);
+		renderer_swap_buffer(&render_context);
+
+	}
 
 	return 0;
 }
-

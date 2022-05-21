@@ -8,6 +8,11 @@
 #include <SDL2/SDL_opengl.h>
 #include <GL/glu.h>
 
+#include <cglm/cglm.h>
+
+#include "texture.h"
+#include "shader.h"
+
 typedef GLuint VAO;
 
 typedef struct RenderContext {
@@ -19,6 +24,17 @@ typedef struct RenderContext {
 bool renderer_init(
 	RenderContext* render_context,
 	const char* title, int win_width, int win_height, uint32_t win_flags);
+
+void renderer_draw_2D_texture(
+	RenderContext* render_context,
+	Texture texture,
+	ShaderProgram shader,
+	vec2 position,
+	vec2 size);
+
+void renderer_set_clear_colour(float r, float g, float b, float a);
+void renderer_clear();
+void renderer_swap_buffer(RenderContext* render_context);
 
 bool renderer_fullscreent(bool fullscreen);
 

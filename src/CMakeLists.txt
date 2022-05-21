@@ -19,10 +19,11 @@ set(src
 	component_defs.c
 	renderer.c
 	resource_manager.c
-	shader.c)
+	shader.c
+	stb_image.c
+	texture.c)
 
 find_package(SDL2 REQUIRED)
-find_package(SDL2_Image REQUIRED) 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
@@ -35,13 +36,16 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../include/")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../include/components")
 target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../include/renderer")
+target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../lib/stb")
 target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_INCLUDE_DIRS})
-target_include_directories(${PROJECT_NAME} PUBLIC ${SDL2_IMAGE_INCLUDE_DIRS})
 
+target_link_libraries(${PROJECT_NAME} m)
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
-target_link_libraries(${PROJECT_NAME} ${SDL2_IMAGE_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} OpenGL::OpenGL)
+target_link_libraries(${PROJECT_NAME} GLU)
 target_link_libraries(${PROJECT_NAME} GLEW::GLEW)
+target_link_libraries(${PROJECT_NAME} cglm)
+
 
 # add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} -E
 # 	copy_directory "../lib" ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})

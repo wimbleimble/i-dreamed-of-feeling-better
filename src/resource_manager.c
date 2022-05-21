@@ -2,25 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include "stb_image.h"
 
 void resource_init(Resources* resources)
 {
 	// TODO maybe get rid of this.
 }
 
+//-- Util ----------------------------------------------------------------------
 const char* get_asset_directory()
 {
 	// TODO Better this shit.
-}
-
-void resource_set_shader_capacity(Resources* resources, size_t capacity)
-{
-	// TODO implement dynamic resizing
-	assert(resources->capacity == 0);
-	assert(resources->shaders == NULL);
-
-	resources->shaders = calloc(capacity, sizeof(ShaderProgram));
-	resources->capacity = capacity;
 }
 
 char* load_file(const char* path)
@@ -41,10 +33,22 @@ char* load_file(const char* path)
 	return buffer;
 }
 
+//-- Shaders -------------------------------------------------------------------
+
+void resource_set_shader_capacity(Resources* resources, size_t shader_capacity)
+{
+	// TODO implement dynamic resizing
+	assert(resources->shader_capacity == 0);
+	assert(resources->shaders == NULL);
+
+	resources->shaders = calloc(shader_capacity, sizeof(ShaderProgram));
+	resources->shader_capacity = shader_capacity;
+}
+
 ShaderProgram resource_load_shader(
 	Resources* resources, const char* vertex_file, const char* fragment_file)
 {
-	assert((resources->num_shaders < resources->capacity)
+	assert((resources->num_shaders < resources->shader_capacity)
 		&& "Cannot add another shader.");
 
 	char* vertex_source = load_file(vertex_file);
@@ -56,4 +60,31 @@ ShaderProgram resource_load_shader(
 	free(vertex_source);
 	free(fragment_source);
 	return shader;
+}
+
+//-- Textures ------------------------------------------------------------------
+
+void resource_set_texture_capacity(Resources* resources, size_t texture_capacity)
+{
+	assert(resources->texture_capacity == 0);
+	assert(resources->textures == NULL);
+
+	resources->textures = calloc(texture_capacity, sizeof(Texture));
+	resources->texture_capacity = texture_capacity;
+}
+
+Texture resource_load_texture(Resources* resources, const char* file, bool alpha)
+{
+	assert((resources->num_textures < resources->texture_capacity)
+		&& "Cannot add another texture. Increase texture capacity");
+	stbi_set_flip_vertically_on_load(true);
+	int width, height, channels;
+	uint8_t* data = stbi_load(file, &width, &height, &channels, 0);
+	assert(data && "Failed to load image");
+
+	Texture texture = texture_create(width, height, alpha, data);
+	stbi_image_free(data);
+
+	resources->textures[resources->num_textures++] = texture;
+	return texture;
 }
