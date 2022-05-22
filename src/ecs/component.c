@@ -48,7 +48,7 @@ void* component_array_append(ComponentArray* array, void* component, Entity enti
 	memcpy(new_comp, component, array->component_size);
 	array->entity_to_index[(size_t)entity] = new_comp_index;
 	array->index_to_entity[new_comp_index] = entity;
-	++array->num_components;
+	++(array->num_components);
 
 	return new_comp;
 }
