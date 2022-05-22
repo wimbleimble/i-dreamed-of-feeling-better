@@ -2,7 +2,7 @@
 #include "ecs.h"
 #include "entity.h"
 #include "renderer.h"
-#include "resource_manager.h"
+#include "resources.h"
 #include "texture.h"
 #include <assert.h>
 #include "cglm/cglm.h"
@@ -56,15 +56,15 @@ int main()
 
 	Resources resources = {};
 	// Currently does nothing
-	resource_init(&resources);
-	resource_set_shader_capacity(&resources, 1);
-	resource_set_texture_capacity(&resources, 1);
+	resources_init(&resources);
+	resources_set_shader_capacity(&resources, 1);
+	resources_set_texture_capacity(&resources, 1);
 	renderer_set_clear_colour(1.0, 1.0, 1.0, 1.0);
-	ShaderProgram shader = resource_load_shader(
+	ShaderProgram shader = resources_load_shader(
 		&resources, "shaders/sprite.vert", "shaders/sprite.frag");
 
 	Texture bla_texture =
-		resource_load_texture(&resources, "sprites/bla.png", true);
+		resources_load_texture(&resources, "sprites/bla.png", true);
 
 	bool run = true;
 	while (run)

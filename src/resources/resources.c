@@ -1,10 +1,10 @@
-#include "resource_manager.h"
+#include "resources.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 #include "stb_image.h"
 
-void resource_init(Resources* resources)
+void resources_init(Resources* resources)
 {
 	// TODO maybe get rid of this.
 }
@@ -35,7 +35,7 @@ char* load_file(const char* path)
 
 //-- Shaders -------------------------------------------------------------------
 
-void resource_set_shader_capacity(Resources* resources, size_t shader_capacity)
+void resources_set_shader_capacity(Resources* resources, size_t shader_capacity)
 {
 	// TODO implement dynamic resizing
 	assert(resources->shader_capacity == 0);
@@ -45,7 +45,7 @@ void resource_set_shader_capacity(Resources* resources, size_t shader_capacity)
 	resources->shader_capacity = shader_capacity;
 }
 
-ShaderProgram resource_load_shader(
+ShaderProgram resources_load_shader(
 	Resources* resources, const char* vertex_file, const char* fragment_file)
 {
 	assert((resources->num_shaders < resources->shader_capacity)
@@ -64,7 +64,7 @@ ShaderProgram resource_load_shader(
 
 //-- Textures ------------------------------------------------------------------
 
-void resource_set_texture_capacity(Resources* resources, size_t texture_capacity)
+void resources_set_texture_capacity(Resources* resources, size_t texture_capacity)
 {
 	assert(resources->texture_capacity == 0);
 	assert(resources->textures == NULL);
@@ -73,7 +73,7 @@ void resource_set_texture_capacity(Resources* resources, size_t texture_capacity
 	resources->texture_capacity = texture_capacity;
 }
 
-Texture resource_load_texture(Resources* resources, const char* file, bool alpha)
+Texture resources_load_texture(Resources* resources, const char* file, bool alpha)
 {
 	assert((resources->num_textures < resources->texture_capacity)
 		&& "Cannot add another texture. Increase texture capacity");
