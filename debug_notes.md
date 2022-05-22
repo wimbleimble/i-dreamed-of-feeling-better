@@ -1,6 +1,0 @@
-- ent 0
-	- transform: 0x555555872d80
-	- sprite: 0x555555860d50
-- ent 0
-	- transform: 0x555555872d90
-	- sprite: 0x555555860d58
