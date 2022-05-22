@@ -10,7 +10,7 @@ void system_render_update(ECS* ecs, RenderContext* render_context)
 	{
 		Entity entity = sprite_array.index_to_entity[i];
 		Transform* transform = ecs_get_component(ecs, entity, TRANSFORM);
-		Sprite* sprite = (Sprite*)(sprite_array.array + i);
+		Sprite* sprite = (Sprite*)(sprite_array.array) + i;
 		renderer_draw_2D_texture(
 			render_context,
 			sprite->texture,
@@ -19,5 +19,6 @@ void system_render_update(ECS* ecs, RenderContext* render_context)
 			transform->size
 		);
 	}
+
 	renderer_swap_buffer(render_context);
 }

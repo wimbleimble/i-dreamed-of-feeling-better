@@ -50,6 +50,10 @@ bool renderer_init(
 	render_context->gl_context = SDL_GL_CreateContext(render_context->window);
 	assert(render_context->gl_context && "GL_CONTEXT == NULL");
 
+	// TODO optional vsync
+	// Uncomment me to make fps go pchooooo
+	// SDL_GL_SetSwapInterval(0);
+
 	// Initialise GLEW
 	GLenum err = glewInit();
 	if (err != GLEW_OK)

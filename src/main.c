@@ -8,42 +8,24 @@
 #include "cglm/cglm.h"
 #include "system_render.h"
 
-// void test_ecs()
-// {
-// 	ECS ecs = { 0 };
-// 	ecs_init(&ecs);
+void create_things(ECS* ecs, Resources* resources)
+{
+	ShaderProgram face_thing_shader = resources_load_shader(
+		resources, "shaders/sprite.vert", "shaders/sprite.frag");
+	Texture face_thing_texture =
+		resources_load_texture(resources, "sprites/bla.png", true);
+	uint8_t diameter = 800 / 32;
 
-// 	Entity ents[3];
-// 	ents[0] = ecs_create_entity(&ecs);
-// 	ents[1] = ecs_create_entity(&ecs);
-// 	ents[2] = ecs_create_entity(&ecs);
-// 	Transform* transform1 = (Transform*)ecs_assign_component(
-// 		&ecs, ents[0], TRANSFORM,
-// 		&(Transform){.x = 5, .y = 6, .width = 7, .height = 8 });
-// 	ecs_assign_component(&ecs, ents[0], SPRITE, &(Sprite){});
-
-
-// 	for (int i = 0; i < 3; ++i)
-// 		printf("Entity %u, signature %u\n",
-// 			ents[i], entity_signature(&ecs.entity_data, ents[i]));
-
-// 	printf("x: %d\n", transform1->x);
-// 	printf("y: %d\n", transform1->y);
-
-// 	Transform* transform2 = (Transform*)ecs_get_component(
-// 		&ecs, ents[0], TRANSFORM
-// 	);
-
-// 	printf("tranform1: %p, transform2: %p\n", transform1, transform2);
-// 	printf("x: %d\n", transform2->x);
-// 	printf("y: %d\n", transform2->y);
-
-
-// 	ecs_destroy_entity(&ecs, ents[0]);
-// 	ecs_destroy_entity(&ecs, ents[1]);
-// 	ecs_destroy_entity(&ecs, ents[2]);
-
-// }
+	for (uint8_t row = 0; row < 24; ++row)
+		for (uint8_t col = 0; col < 32; ++col)
+		{
+			Entity ent = ecs_create_entity(ecs);
+			Transform* transform = ecs_assign_component(ecs, ent, TRANSFORM,
+				&(Transform){.position = { col * diameter, row * diameter }, .size = { diameter, diameter }});
+			Sprite* sprite = ecs_assign_component(ecs, ent, SPRITE,
+				&(Sprite){.texture = face_thing_texture, .shader = face_thing_shader });
+		}
+}
 
 int main()
 {
@@ -58,29 +40,12 @@ int main()
 	resources_init(&resources);
 	resources_set_shader_capacity(&resources, 1);
 	resources_set_texture_capacity(&resources, 1);
-	ShaderProgram face_thing_shader = resources_load_shader(
-		&resources, "shaders/sprite.vert", "shaders/sprite.frag");
-	Texture face_thing_texture =
-		resources_load_texture(&resources, "sprites/bla.png", true);
 
 	// Initialise ECS
 	ECS ecs = { 0 };
 	ecs_init(&ecs);
 
-	// Set up entities
-	struct {
-		Entity id;
-		Transform* transform;
-		Sprite* sprite;
-	} face_thing;
-
-	face_thing.id = ecs_create_entity(&ecs);
-	face_thing.transform = ecs_assign_component(
-		&ecs, face_thing.id, TRANSFORM,
-		&(Transform){.position = { 200, 200 }, .size = { 200, 200 }});
-	face_thing.sprite = ecs_assign_component(
-		&ecs, face_thing.id, SPRITE,
-		&(Sprite){.texture = face_thing_texture, .shader = face_thing_shader });
+	create_things(&ecs, &resources);
 
 	uint64_t curr_time = SDL_GetPerformanceCounter();
 	uint64_t prev_time = 0;
@@ -93,6 +58,7 @@ int main()
 		double delta_time =
 			((double)(curr_time - prev_time) * 1000.0)
 			/ (double)SDL_GetPerformanceFrequency();
+		printf("FPS: %f\n", 1000.0 / delta_time);
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
 		{
@@ -103,18 +69,6 @@ int main()
 				case SDLK_ESCAPE:
 					run = false;
 					break;
-				case SDLK_LEFT:
-					face_thing.transform->position[0] -= (1 * delta_time);
-					break;
-				case SDLK_RIGHT:
-					face_thing.transform->position[0] += (1 * delta_time);
-					break;
-				case SDLK_DOWN:
-					face_thing.transform->position[1] -= (1 * delta_time);
-					break;
-				case SDLK_UP:
-					face_thing.transform->position[1] += (1 * delta_time);
-					break;
 				default:
 					break;
 				}
@@ -124,6 +78,7 @@ int main()
 		}
 		system_render_update(&ecs, &render_context);
 	}
+	// TODO deinit
 
 	return 0;
 }
