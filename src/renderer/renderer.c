@@ -73,23 +73,40 @@ bool renderer_init(
 	return true;
 }
 
-void renderer_draw_2D_texture(
+void renderer_draw_2D_sprite(
 	RenderContext* render_context,
 	Texture texture,
 	ShaderProgram shader,
 	vec2 position,
-	vec2 size)
+	vec2 size,
+	vec2 camera_position,
+	vec2 camera_size)
 {
 	mat4 model;
-
 	vec3 translate = { position[0], position[1], 0.0f };
 	glm_translate_make(model, translate);
 
 	vec3 scale = { size[0], size[1], 1.0f };
 	glm_scale(model, scale);
 
+	mat4 view;
+	vec3 eye = { camera_position[0], camera_position[1], 0.5f };
+	vec3 direction = { 0.0f, 0.0f, -1.0f };
+	vec3 up = { 0.0f, 1.0f, 0.0f };
+	glm_look(eye, direction, up, view);
+
+	mat4 projection;
+	glm_ortho(
+		-camera_size[0] / 2.0f,
+		camera_size[0] / 2.0f,
+		-camera_size[1] / 2.0f,
+		camera_size[1] / 2.0f,
+		-1.0f, 1.0f, projection);
+
 	shader_use(shader);
 	shader_set_matrix_4(shader, "model", model);
+	shader_set_matrix_4(shader, "view", view);
+	shader_set_matrix_4(shader, "projection", projection);
 	glActiveTexture(GL_TEXTURE0);
 	texture_bind(texture);
 	glBindVertexArray(render_context->quadVAO);

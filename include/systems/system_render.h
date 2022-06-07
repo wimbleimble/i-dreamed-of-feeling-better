@@ -3,7 +3,8 @@
 #include "ecs.h"
 #include "renderer.h"
 
-void system_render_update(ECS* ecs, RenderContext* render_context);
+void system_render_update(
+	ECS* ecs, RenderContext* render_context, Entity camera);
 // TODO Event handling
 void system_render_handle_events(ECS* ecs, void* event_thing);
 

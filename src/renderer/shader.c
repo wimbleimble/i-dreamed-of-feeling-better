@@ -51,10 +51,6 @@ ShaderProgram shader_compile(const char* vertex_source, const char* fragment_sou
 	glDeleteShader(vertex_shader);
 	glDeleteShader(fragment_shader);
 
-	mat4 projection;
-	glm_ortho(0.0f, 800.0f, 0.0f, 600.0f, -1.0f, 2.0f, projection);
-	shader_use(program);
-	shader_set_matrix_4(program, "projection", projection);
 	return program;
 }
 

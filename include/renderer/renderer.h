@@ -25,12 +25,14 @@ bool renderer_init(
 	RenderContext* render_context,
 	const char* title, int win_width, int win_height, uint32_t win_flags);
 
-void renderer_draw_2D_texture(
+void renderer_draw_2D_sprite(
 	RenderContext* render_context,
 	Texture texture,
 	ShaderProgram shader,
 	vec2 position,
-	vec2 size);
+	vec2 size,
+	vec2 camera_position,
+	vec2 camera_size);
 
 void renderer_set_clear_colour(float r, float g, float b, float a);
 void renderer_clear();

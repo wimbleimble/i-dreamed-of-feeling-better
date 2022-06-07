@@ -15,7 +15,9 @@ typedef struct Resources {
 
 } Resources;
 
-void resources_init(Resources* resources);
+void resources_init(
+	Resources* resources, size_t shader_capacity, size_t texture_capacity);
+
 void resources_set_shader_capacity(Resources* resources, size_t shader_capacity);
 ShaderProgram resources_load_shader(
 	Resources* resources, const char* vertex_file, const char* fragment_file);

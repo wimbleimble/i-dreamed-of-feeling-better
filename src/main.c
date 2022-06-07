@@ -8,45 +8,28 @@
 #include "cglm/cglm.h"
 #include "system_render.h"
 
-void create_things(ECS* ecs, Resources* resources)
+Entity create_things(ECS* ecs, Resources* resources)
 {
 	ShaderProgram face_thing_shader = resources_load_shader(
 		resources, "shaders/sprite.vert", "shaders/sprite.frag");
 	Texture face_thing_texture =
 		resources_load_texture(resources, "sprites/bla.png", true);
-	uint8_t diameter = 800 / 32;
+	uint8_t diameter = 64;
 
-	for (uint8_t row = 0; row < 24; ++row)
-		for (uint8_t col = 0; col < 32; ++col)
-		{
-			Entity ent = ecs_create_entity(ecs);
-			Transform* transform = ecs_assign_component(ecs, ent, TRANSFORM,
-				&(Transform){.position = { col * diameter, row * diameter }, .size = { diameter, diameter }});
-			Sprite* sprite = ecs_assign_component(ecs, ent, SPRITE,
-				&(Sprite){.texture = face_thing_texture, .shader = face_thing_shader });
-		}
+	Entity ent = ecs_create_entity(ecs);
+	Transform* transform = ecs_assign_component(ecs, ent, TRANSFORM,
+		&(Transform){.position = { 0.0f, 0.0f }, .size = { diameter, diameter }});
+	Sprite* sprite = ecs_assign_component(ecs, ent, SPRITE,
+		&(Sprite){.texture = face_thing_texture, .shader = face_thing_shader });
+
+	Entity camera = ecs_create_entity(ecs);
+	ecs_assign_component(ecs, camera, TRANSFORM,
+		&(Transform){.position = { 0.0f, 0.0f }, .size = { 800.0f, 600.0f }});
+	return camera;
 }
 
-int main()
+static inline int game_loop(ECS* ecs, RenderContext* render_context, Entity camera)
 {
-	// Set up renderer
-	RenderContext render_context = {};
-	assert(renderer_init(&render_context,
-		"I Dreamed of Feeling Better", 800, 600, SDL_WINDOW_OPENGL));
-	renderer_set_clear_colour(1.0, 1.0, 1.0, 1.0);
-
-	// Set up resources
-	Resources resources = {};
-	resources_init(&resources);
-	resources_set_shader_capacity(&resources, 1);
-	resources_set_texture_capacity(&resources, 1);
-
-	// Initialise ECS
-	ECS ecs = { 0 };
-	ecs_init(&ecs);
-
-	create_things(&ecs, &resources);
-
 	uint64_t curr_time = SDL_GetPerformanceCounter();
 	uint64_t prev_time = 0;
 
@@ -58,7 +41,9 @@ int main()
 		double delta_time =
 			((double)(curr_time - prev_time) * 1000.0)
 			/ (double)SDL_GetPerformanceFrequency();
-		printf("FPS: %f\n", 1000.0 / delta_time);
+
+		// printf("FPS: %f\n", 1000.0 / delta_time);
+
 		SDL_Event event;
 		while (SDL_PollEvent(&event))
 		{
@@ -76,9 +61,34 @@ int main()
 			else if (event.type == SDL_QUIT)
 				run = false;
 		}
-		system_render_update(&ecs, &render_context);
+		system_render_update(ecs, render_context, camera);
 	}
 	// TODO deinit
 
 	return 0;
+
+}
+
+int main()
+{
+	// Set up renderer
+	RenderContext render_context = {};
+	assert(renderer_init(&render_context,
+		"I Dreamed of Feeling Better", 800, 600, SDL_WINDOW_OPENGL));
+	renderer_set_clear_colour(1.0, 1.0, 1.0, 1.0);
+
+	// Set up resources
+	Resources resources = {};
+	resources_init(&resources, 1, 1);
+
+	// Initialise ECS
+	ECS ecs = {};
+	ecs_init(&ecs);
+
+	Entity camera = create_things(&ecs, &resources);
+	printf("Transform size: %u\n", sizeof(Transform));
+	printf("Sprite size: %u\n", sizeof(Sprite));
+	printf("Camera size: %u\n", sizeof(Camera));
+
+	return game_loop(&ecs, &render_context, camera);
 }

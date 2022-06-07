@@ -4,9 +4,10 @@
 #include <assert.h>
 #include "stb_image.h"
 
-void resources_init(Resources* resources)
+void resources_init(Resources* resources, size_t shader_capacity, size_t texture_capacity)
 {
-	// TODO maybe get rid of this.
+	resources_set_shader_capacity(resources, shader_capacity);
+	resources_set_texture_capacity(resources, texture_capacity);
 }
 
 //-- Util ----------------------------------------------------------------------
