@@ -13,8 +13,7 @@ void system_render_update(ECS* ecs, RenderContext* render_context, Entity camera
 		Sprite* sprite = (Sprite*)(sprite_array.array) + i;
 		renderer_draw_2D_sprite(
 			render_context,
-			sprite->texture,
-			sprite->shader,
+			sprite,
 			transform->position,
 			transform->size,
 			camera_transform->position,

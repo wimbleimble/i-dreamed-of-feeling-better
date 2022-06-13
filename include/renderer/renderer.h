@@ -10,15 +10,14 @@
 
 #include <cglm/cglm.h>
 
-#include "texture.h"
-#include "shader.h"
+#include "sprite.h"
 
 typedef GLuint VAO;
 
 typedef struct RenderContext {
 	SDL_Window* window;
 	SDL_GLContext gl_context;
-	VAO quadVAO;
+	VAO quad_vao;
 } RenderContext;
 
 bool renderer_init(
@@ -27,8 +26,7 @@ bool renderer_init(
 
 void renderer_draw_2D_sprite(
 	RenderContext* render_context,
-	Texture texture,
-	ShaderProgram shader,
+	Sprite* sprite,
 	vec2 position,
 	vec2 size,
 	vec2 camera_position,

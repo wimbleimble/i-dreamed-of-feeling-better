@@ -13,14 +13,20 @@ Entity create_things(ECS* ecs, Resources* resources)
 	ShaderProgram face_thing_shader = resources_load_shader(
 		resources, "shaders/sprite.vert", "shaders/sprite.frag");
 	Texture face_thing_texture =
-		resources_load_texture(resources, "sprites/bla.png", true);
-	uint8_t diameter = 64;
+		resources_load_texture(resources, "sprites/vriska/vriska.png", true);
 
 	Entity ent = ecs_create_entity(ecs);
 	Transform* transform = ecs_assign_component(ecs, ent, TRANSFORM,
-		&(Transform){.position = { 0.0f, 0.0f }, .size = { diameter, diameter }});
+		&(Transform){.position = { 0.0f, 0.0f }, .size = { 69, 87 }});
 	Sprite* sprite = ecs_assign_component(ecs, ent, SPRITE,
-		&(Sprite){.texture = face_thing_texture, .shader = face_thing_shader });
+		&(Sprite){
+			.texture = face_thing_texture,
+			.shader = face_thing_shader,
+			.src_rect = { 0, 0, 23, 29 },
+			.tex_width = 483,
+			.tex_height = 29});
+
+	printf("sprite_tex_width: %u", sprite->tex_width);
 
 	Entity camera = ecs_create_entity(ecs);
 	ecs_assign_component(ecs, camera, TRANSFORM,

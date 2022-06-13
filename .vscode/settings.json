@@ -21,6 +21,7 @@
 		"cglm.h": "c",
 		"vec2.h": "c",
 		"common.h": "c",
-		"vec2-ext.h": "c"
+		"vec2-ext.h": "c",
+		"rect.h": "c"
 	}
 }

@@ -59,6 +59,12 @@ void shader_use(Shader shader)
 	glUseProgram(shader);
 }
 
+void shader_set_matrix_3(Shader shader, const char* name, const mat3 matrix)
+{
+	glUniformMatrix3fv(
+		glGetUniformLocation(shader, name), 1, false, matrix[0]);
+}
+
 void shader_set_matrix_4(Shader shader, const char* name, const mat4 matrix)
 {
 	glUniformMatrix4fv(

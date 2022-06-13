@@ -2,23 +2,47 @@
 #include <stdio.h>
 
 #include "renderer.h"
-#include "shader.h"
 
 VAO generate_quad_vao()
 {
-	GLuint vbo;
-	VAO vao;
-	float vertices[] = {
-		// pos      // tex
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.0f, 0.0f, 0.0f,
+	// TODO:
+	// Create VAO and VBO in init, just update them with texture coordinate data.
+	// benchmark having one vbo with everything, which i update in its entirtiy
+	// for each sprite, vs having two vbos, one for verts and one for texture
+	// coords, so that the consant one stays constant and the changing one
+	// changes.
+	// or maybe consider putting all the hard work in the shader?
+	// think that might be best. It's just a simple uniform transformation.
 
-		0.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
-		1.0f, 0.0f, 1.0f, 0.0f
+	// yeah looks like that't the best bet
+	// https://stackoverflow.com/questions/27771902/opengl-changing-texture-coordinates-on-the-fly
+
+	// const float left = (float)src_rect->x / tex_width;
+	// const float top = (float)src_rect->y / -tex_height + 1;
+	// const float right = (float)(src_rect->x + src_rect->w) / tex_width;
+	// const float bottom = (float)(src_rect->y + src_rect->h) / -tex_height + 1;
+
+	// const float vertices[] = {
+	// 	// pos      // tex
+	// 	0.0f, 1.0f, left, top,
+	// 	1.0f, 0.0f, right, bottom,
+	// 	0.0f, 0.0f, left, bottom,
+
+	// 	0.0f, 1.0f, left, top,
+	// 	1.0f, 1.0f, right, top,
+	// 	1.0f, 0.0f, right, bottom
+	// };
+	const float vertices[] = {
+		0.0f, 1.0f,
+		1.0f, 0.0f,
+		0.0f, 0.0f,
+		0.0f, 1.0f,
+		1.0f, 1.0f,
+		1.0f, 0.0f
 	};
 
+	GLuint vbo;
+	VAO vao;
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
 	glBindVertexArray(vao);
@@ -26,7 +50,7 @@ VAO generate_quad_vao()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
@@ -52,7 +76,7 @@ bool renderer_init(
 
 	// TODO optional vsync
 	// Uncomment me to make fps go pchooooo
-	// SDL_GL_SetSwapInterval(0);
+	//SDL_GL_SetSwapInterval(0);
 
 	// Initialise GLEW
 	GLenum err = glewInit();
@@ -65,7 +89,7 @@ bool renderer_init(
 	if (!GLEW_VERSION_3_3)
 		return false;
 
-	render_context->quadVAO = generate_quad_vao();
+	render_context->quad_vao = generate_quad_vao();
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	// TODO dynamic viewport
@@ -75,8 +99,7 @@ bool renderer_init(
 
 void renderer_draw_2D_sprite(
 	RenderContext* render_context,
-	Texture texture,
-	ShaderProgram shader,
+	Sprite* sprite,
 	vec2 position,
 	vec2 size,
 	vec2 camera_position,
@@ -103,13 +126,32 @@ void renderer_draw_2D_sprite(
 		camera_size[1] / 2.0f,
 		-1.0f, 1.0f, projection);
 
-	shader_use(shader);
-	shader_set_matrix_4(shader, "model", model);
-	shader_set_matrix_4(shader, "view", view);
-	shader_set_matrix_4(shader, "projection", projection);
+	// magic numbers!
+	const float sx =
+		(float)(sprite->src_rect.z - sprite->src_rect.x) / sprite->tex_width;
+	const float sy =
+		-(float)(sprite->src_rect.y - sprite->src_rect.w) / sprite->tex_height;
+	const float tx =
+		(float)sprite->src_rect.x / sprite->tex_width;
+	const float ty =
+		-(float)sprite->src_rect.w / sprite->tex_height + 1;
+	printf("sx: %f, sy: %f, tx: %f, ty: %f\n", sx, sy, tx, ty);
+
+	mat3 texture_matrix = {
+		sx,   0.0f, tx,
+		0.0f, sy,   ty,
+		0.0f, 0.0f, 1.0f
+	};
+
+	shader_use(sprite->shader);
+	shader_set_matrix_4(sprite->shader, "model", model);
+	shader_set_matrix_4(sprite->shader, "view", view);
+	shader_set_matrix_4(sprite->shader, "projection", projection);
+	shader_set_matrix_3(sprite->shader, "texture_window", texture_matrix);
 	glActiveTexture(GL_TEXTURE0);
-	texture_bind(texture);
-	glBindVertexArray(render_context->quadVAO);
+	texture_bind(sprite->texture);
+
+	glBindVertexArray(render_context->quad_vao);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glBindVertexArray(0);
 }
