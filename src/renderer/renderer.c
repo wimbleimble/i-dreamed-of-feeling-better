@@ -5,33 +5,6 @@
 
 VAO generate_quad_vao()
 {
-	// TODO:
-	// Create VAO and VBO in init, just update them with texture coordinate data.
-	// benchmark having one vbo with everything, which i update in its entirtiy
-	// for each sprite, vs having two vbos, one for verts and one for texture
-	// coords, so that the consant one stays constant and the changing one
-	// changes.
-	// or maybe consider putting all the hard work in the shader?
-	// think that might be best. It's just a simple uniform transformation.
-
-	// yeah looks like that't the best bet
-	// https://stackoverflow.com/questions/27771902/opengl-changing-texture-coordinates-on-the-fly
-
-	// const float left = (float)src_rect->x / tex_width;
-	// const float top = (float)src_rect->y / -tex_height + 1;
-	// const float right = (float)(src_rect->x + src_rect->w) / tex_width;
-	// const float bottom = (float)(src_rect->y + src_rect->h) / -tex_height + 1;
-
-	// const float vertices[] = {
-	// 	// pos      // tex
-	// 	0.0f, 1.0f, left, top,
-	// 	1.0f, 0.0f, right, bottom,
-	// 	0.0f, 0.0f, left, bottom,
-
-	// 	0.0f, 1.0f, left, top,
-	// 	1.0f, 1.0f, right, top,
-	// 	1.0f, 0.0f, right, bottom
-	// };
 	const float vertices[] = {
 		0.0f, 1.0f,
 		1.0f, 0.0f,
@@ -100,6 +73,7 @@ bool renderer_init(
 void renderer_draw_2D_sprite(
 	RenderContext* render_context,
 	Sprite* sprite,
+	Rect* frame,
 	vec2 position,
 	vec2 size,
 	vec2 camera_position,
@@ -128,14 +102,13 @@ void renderer_draw_2D_sprite(
 
 	// magic numbers!
 	const float sx =
-		(float)(sprite->src_rect.z - sprite->src_rect.x) / sprite->tex_width;
+		(float)(frame->z - frame->x) / sprite->texture.width;
 	const float sy =
-		-(float)(sprite->src_rect.y - sprite->src_rect.w) / sprite->tex_height;
+		-(float)(frame->y - frame->w) / sprite->texture.height;
 	const float tx =
-		(float)sprite->src_rect.x / sprite->tex_width;
+		(float)frame->x / sprite->texture.width;
 	const float ty =
-		-(float)sprite->src_rect.w / sprite->tex_height + 1;
-	printf("sx: %f, sy: %f, tx: %f, ty: %f\n", sx, sy, tx, ty);
+		-(float)frame->w / sprite->texture.height + 1;
 
 	mat3 texture_matrix = {
 		sx,   0.0f, tx,
@@ -149,7 +122,7 @@ void renderer_draw_2D_sprite(
 	shader_set_matrix_4(sprite->shader, "projection", projection);
 	shader_set_matrix_3(sprite->shader, "texture_window", texture_matrix);
 	glActiveTexture(GL_TEXTURE0);
-	texture_bind(sprite->texture);
+	texture_bind(sprite->texture.id);
 
 	glBindVertexArray(render_context->quad_vao);
 	glDrawArrays(GL_TRIANGLES, 0, 6);

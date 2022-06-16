@@ -21,12 +21,9 @@ Entity create_things(ECS* ecs, Resources* resources)
 	Sprite* sprite = ecs_assign_component(ecs, ent, SPRITE,
 		&(Sprite){
 			.texture = face_thing_texture,
-			.shader = face_thing_shader,
-			.src_rect = { 0, 0, 23, 29 },
-			.tex_width = 483,
-			.tex_height = 29});
-
-	printf("sprite_tex_width: %u", sprite->tex_width);
+			.shader = face_thing_shader});
+	Animator* animator = ecs_assign_component(ecs, ent, ANIMATOR,
+		&(Animator){.frame = {0, 0, 23, 29}});
 
 	Entity camera = ecs_create_entity(ecs);
 	ecs_assign_component(ecs, camera, TRANSFORM,

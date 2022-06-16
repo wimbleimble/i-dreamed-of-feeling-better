@@ -5,12 +5,14 @@
 #include "sprite.h"
 #include "transform.h"
 #include "camera.h"
+#include "animator.h"
 
 typedef enum ComponentType
 {
 	SPRITE,
 	TRANSFORM,
 	CAMERA,
+	ANIMATOR,
 	NUM_COMPONENTS
 } ComponentType;
 

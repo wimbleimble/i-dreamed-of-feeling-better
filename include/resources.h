@@ -4,6 +4,9 @@
 #include "texture.h"
 #include <stddef.h>
 
+// TODO redblack tree thing to keep track of what textures have been loaded
+// based on filepath. then when you try to load the same one twice it just
+// gives you back the old one.
 typedef struct Resources {
 	ShaderProgram* shaders;
 	size_t num_shaders;

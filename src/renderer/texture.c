@@ -3,10 +3,13 @@
 Texture texture_create(uint32_t width, uint32_t height, bool alpha, uint8_t* data)
 {
 
-	Texture texture;
-	glGenTextures(1, &texture);
+	Texture texture = {
+		.width = width,
+		.height = height
+	};
+	glGenTextures(1, &texture.id);
 	const GLuint format = alpha ? GL_RGBA : GL_RGB;
-	glBindTexture(GL_TEXTURE_2D, texture);
+	glBindTexture(GL_TEXTURE_2D, texture.id);
 	glTexImage2D(
 		GL_TEXTURE_2D,
 		0, format, width, height, 0, format,
@@ -21,7 +24,7 @@ Texture texture_create(uint32_t width, uint32_t height, bool alpha, uint8_t* dat
 	return texture;
 }
 
-void texture_bind(Texture texture)
+void texture_bind(TextureID texture)
 {
 	glBindTexture(GL_TEXTURE_2D, texture);
 }

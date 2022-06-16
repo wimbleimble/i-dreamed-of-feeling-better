@@ -11,6 +11,7 @@
 #include <cglm/cglm.h>
 
 #include "sprite.h"
+#include "rect.h"
 
 typedef GLuint VAO;
 
@@ -27,6 +28,7 @@ bool renderer_init(
 void renderer_draw_2D_sprite(
 	RenderContext* render_context,
 	Sprite* sprite,
+	Rect* frame,
 	vec2 position,
 	vec2 size,
 	vec2 camera_position,
