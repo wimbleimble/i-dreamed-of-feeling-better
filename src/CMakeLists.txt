@@ -27,13 +27,17 @@ set(resources
 
 set(systems
 	systems/system_render.c
-	systems/system_animation.c)
+	systems/system_animation.c
+	systems/system_movement.c)
+
+set(misc
+	input.c)
 
 set(game
 	main.c
 	component_defs.c)
 
-set(src ${ecs} ${renderer} ${resources} ${game} ${systems})
+set(src ${ecs} ${renderer} ${resources} ${game} ${systems} ${misc})
 
 find_package(SDL2 REQUIRED)
 find_package(OpenGL REQUIRED)

@@ -8,31 +8,40 @@
 #include "cglm/cglm.h"
 #include "system_render.h"
 #include "system_animation.h"
+#include "system_movement.h"
+
+// Create Vriska
+// Doesn't matter that this goes out of scope. vriska exists whether you
+// want her to or not. her lifetime is not bound to her relevance.
+void create_vriska(ECS* ecs, Resources* resources)
+{
+	ShaderProgram vriska_shader = resources_load_shader(
+		resources, "shaders/sprite.vert", "shaders/sprite.frag");
+	Texture vriska_texture =
+		resources_load_texture(resources, "sprites/vriska/vriska.png", true);
+
+	Entity vriska = ecs_create_entity(ecs);
+
+	ecs_assign_component(ecs, vriska, TRANSFORM, &(Transform){
+		.position = { 0.0f, 0.0f },
+		.size = { 69, 87 }});
+	ecs_assign_component(ecs, vriska, SPRITE, &(Sprite){
+		.texture = vriska_texture,
+		.shader = vriska_shader});
+	ecs_assign_component(ecs, vriska, ANIMATION, &(Animation){
+		.fps = 8,
+		.start_frame = 4,
+		.num_frames = 2,
+		.sheet_frames = 21});
+	ecs_assign_component(ecs, vriska, PLAYER, &(Player){
+		.speed = 35,
+		.run_mult = 1.7f});
+}
 
 Entity create_things(ECS* ecs, Resources* resources)
 {
-	ShaderProgram face_thing_shader = resources_load_shader(
-		resources, "shaders/sprite.vert", "shaders/sprite.frag");
-	Texture face_thing_texture =
-		resources_load_texture(resources, "sprites/vriska/vriska.png", true);
 
-	// Create Vriska
-	// Doesn't matter that this goes out of scope. vriska exists whether you
-	// want her to or not. her lifetime is not bound to her relevance.
-	Entity vriska = ecs_create_entity(ecs);
-	Transform* transform = ecs_assign_component(ecs, vriska, TRANSFORM,
-		&(Transform){.position = { 0.0f, 0.0f }, .size = { 69, 87 }});
-	Sprite* sprite = ecs_assign_component(ecs, vriska, SPRITE,
-		&(Sprite){
-			.texture = face_thing_texture,
-			.shader = face_thing_shader});
-	Animation* animator = ecs_assign_component(ecs, vriska, ANIMATION,
-		&(Animation){
-			.fps = 8,
-			.start_frame = 4,
-			.num_frames = 2,
-			.sheet_frames = 21});
-
+	create_vriska(ecs, resources);
 	Entity camera = ecs_create_entity(ecs);
 	ecs_assign_component(ecs, camera, TRANSFORM,
 		&(Transform){.position = { 0.0f, 0.0f }, .size = { 800.0f, 600.0f }});
@@ -73,6 +82,7 @@ static inline int game_loop(ECS* ecs, RenderContext* render_context, Entity came
 				run = false;
 		}
 		system_animation_tick(ecs, (float)delta_time);
+		system_movement_tick(ecs, (float)delta_time);
 		system_render_update(ecs, render_context, camera);
 	}
 	// TODO deinit

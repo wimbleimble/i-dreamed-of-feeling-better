@@ -1,6 +1,4 @@
 #include "input.h"
-#include <stdbool.h>
-#include <stddef.h>
 #include <SDL2/SDL.h>
 
 bool input_key_state(size_t key)
@@ -10,7 +8,7 @@ bool input_key_state(size_t key)
 	static uint8_t* key_state;
 	if (!initialized)
 	{
-		key_state = SDL_GetKeyboardState(NULL);
+		key_state = (uint8_t*)SDL_GetKeyboardState(NULL);
 		initialized = true;
 	}
 

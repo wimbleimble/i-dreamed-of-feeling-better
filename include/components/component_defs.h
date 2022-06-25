@@ -6,6 +6,7 @@
 #include "transform.h"
 #include "camera.h"
 #include "animation.h"
+#include "player.h"
 
 typedef enum ComponentType
 {
@@ -13,6 +14,7 @@ typedef enum ComponentType
 	TRANSFORM,
 	CAMERA,
 	ANIMATION,
+	PLAYER,
 	NUM_COMPONENTS
 } ComponentType;
 

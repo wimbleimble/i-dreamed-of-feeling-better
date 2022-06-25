@@ -110,11 +110,6 @@ void renderer_draw_2D_sprite(
 	const float ty =
 		-(float)frame->w / sprite->texture.height + 1;
 
-	printf("x: %d w: %d\n", frame->x, frame->w);
-	printf("width: %d height: %d\n", sprite->texture.width, sprite->texture.width);
-	printf("tx: %f ty: %f\n", tx, ty);
-
-
 	mat3 texture_matrix = {
 		sx,   0.0f, tx,
 		0.0f, sy,   ty,

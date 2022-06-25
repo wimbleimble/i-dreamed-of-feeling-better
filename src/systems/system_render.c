@@ -24,8 +24,6 @@ void system_render_update(ECS* ecs, RenderContext* render_context, Entity camera
 				(animation->current_frame + animation->start_frame)
 				* frame_width;
 
-			printf("frame_offset: %d\n", frame_offset);
-
 			frame = (Rect){
 				frame_offset, 0,
 				frame_offset + frame_width, sprite->texture.height
