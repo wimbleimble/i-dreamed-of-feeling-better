@@ -4,5 +4,5 @@ const size_t COMPONENT_SIZES[NUM_COMPONENTS] = {
 	sizeof(Sprite),
 	sizeof(Transform),
 	sizeof(Camera),
-	sizeof(Animator)
+	sizeof(Animation)
 };

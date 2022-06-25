@@ -26,13 +26,13 @@ bool renderer_init(
 	const char* title, int win_width, int win_height, uint32_t win_flags);
 
 void renderer_draw_2D_sprite(
-	RenderContext* render_context,
-	Sprite* sprite,
-	Rect* frame,
-	vec2 position,
-	vec2 size,
-	vec2 camera_position,
-	vec2 camera_size);
+	const RenderContext* render_context,
+	const Sprite* sprite,
+	const Rect* frame,
+	const vec2 position,
+	const vec2 size,
+	const vec2 camera_position,
+	const vec2 camera_size);
 
 void renderer_set_clear_colour(float r, float g, float b, float a);
 void renderer_clear();

@@ -71,13 +71,13 @@ bool renderer_init(
 }
 
 void renderer_draw_2D_sprite(
-	RenderContext* render_context,
-	Sprite* sprite,
-	Rect* frame,
-	vec2 position,
-	vec2 size,
-	vec2 camera_position,
-	vec2 camera_size)
+	const RenderContext* render_context,
+	const Sprite* sprite,
+	const Rect* frame,
+	const vec2 position,
+	const vec2 size,
+	const vec2 camera_position,
+	const vec2 camera_size)
 {
 	mat4 model;
 	vec3 translate = { position[0], position[1], 0.0f };
@@ -109,6 +109,11 @@ void renderer_draw_2D_sprite(
 		(float)frame->x / sprite->texture.width;
 	const float ty =
 		-(float)frame->w / sprite->texture.height + 1;
+
+	printf("x: %d w: %d\n", frame->x, frame->w);
+	printf("width: %d height: %d\n", sprite->texture.width, sprite->texture.width);
+	printf("tx: %f ty: %f\n", tx, ty);
+
 
 	mat3 texture_matrix = {
 		sx,   0.0f, tx,

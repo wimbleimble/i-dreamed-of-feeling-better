@@ -1,5 +1,6 @@
 #ifndef RECT_H
 #define RECT_H
+#include <stdint.h>
 
 typedef struct Rect {
 	uint16_t x;

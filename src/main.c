@@ -7,6 +7,7 @@
 #include <assert.h>
 #include "cglm/cglm.h"
 #include "system_render.h"
+#include "system_animation.h"
 
 Entity create_things(ECS* ecs, Resources* resources)
 {
@@ -15,15 +16,22 @@ Entity create_things(ECS* ecs, Resources* resources)
 	Texture face_thing_texture =
 		resources_load_texture(resources, "sprites/vriska/vriska.png", true);
 
-	Entity ent = ecs_create_entity(ecs);
-	Transform* transform = ecs_assign_component(ecs, ent, TRANSFORM,
+	// Create Vriska
+	// Doesn't matter that this goes out of scope. vriska exists whether you
+	// want her to or not. her lifetime is not bound to her relevance.
+	Entity vriska = ecs_create_entity(ecs);
+	Transform* transform = ecs_assign_component(ecs, vriska, TRANSFORM,
 		&(Transform){.position = { 0.0f, 0.0f }, .size = { 69, 87 }});
-	Sprite* sprite = ecs_assign_component(ecs, ent, SPRITE,
+	Sprite* sprite = ecs_assign_component(ecs, vriska, SPRITE,
 		&(Sprite){
 			.texture = face_thing_texture,
 			.shader = face_thing_shader});
-	Animator* animator = ecs_assign_component(ecs, ent, ANIMATOR,
-		&(Animator){.frame = {0, 0, 23, 29}});
+	Animation* animator = ecs_assign_component(ecs, vriska, ANIMATION,
+		&(Animation){
+			.fps = 8,
+			.start_frame = 4,
+			.num_frames = 2,
+			.sheet_frames = 21});
 
 	Entity camera = ecs_create_entity(ecs);
 	ecs_assign_component(ecs, camera, TRANSFORM,
@@ -64,6 +72,7 @@ static inline int game_loop(ECS* ecs, RenderContext* render_context, Entity came
 			else if (event.type == SDL_QUIT)
 				run = false;
 		}
+		system_animation_tick(ecs, (float)delta_time);
 		system_render_update(ecs, render_context, camera);
 	}
 	// TODO deinit
