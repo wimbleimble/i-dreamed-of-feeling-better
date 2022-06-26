@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "ecs.h"
+#include "event_bus.h"
 #include "entity.h"
 #include "renderer.h"
 #include "resources.h"
@@ -22,20 +23,21 @@ void create_vriska(ECS* ecs, Resources* resources)
 
 	Entity vriska = ecs_create_entity(ecs);
 
-	ecs_assign_component(ecs, vriska, TRANSFORM, &(Transform){
+	ecs_assign_component(ecs, vriska, COMP_TRANSFORM, &(Transform){
 		.position = { 0.0f, 0.0f },
 		.size = { 69, 87 }});
-	ecs_assign_component(ecs, vriska, SPRITE, &(Sprite){
+	ecs_assign_component(ecs, vriska, COMP_SPRITE, &(Sprite){
 		.texture = vriska_texture,
 		.shader = vriska_shader});
-	ecs_assign_component(ecs, vriska, ANIMATION, &(Animation){
+	ecs_assign_component(ecs, vriska, COMP_ANIMATION, &(Animation){
 		.fps = 8,
 		.start_frame = 4,
 		.num_frames = 2,
 		.sheet_frames = 21});
-	ecs_assign_component(ecs, vriska, PLAYER, &(Player){
+	ecs_assign_component(ecs, vriska, COMP_PLAYER, &(Player){
 		.speed = 35,
-		.run_mult = 1.7f});
+		.run_mult = 1.7f,
+		.state = IDLE});
 }
 
 Entity create_things(ECS* ecs, Resources* resources)
@@ -43,12 +45,13 @@ Entity create_things(ECS* ecs, Resources* resources)
 
 	create_vriska(ecs, resources);
 	Entity camera = ecs_create_entity(ecs);
-	ecs_assign_component(ecs, camera, TRANSFORM,
+	ecs_assign_component(ecs, camera, COMP_TRANSFORM,
 		&(Transform){.position = { 0.0f, 0.0f }, .size = { 800.0f, 600.0f }});
 	return camera;
 }
 
-static inline int game_loop(ECS* ecs, RenderContext* render_context, Entity camera)
+static inline int game_loop(
+	ECS* ecs, EventBus event_bus, RenderContext* render_context, Entity camera)
 {
 	uint64_t curr_time = SDL_GetPerformanceCounter();
 	uint64_t prev_time = 0;
@@ -74,6 +77,9 @@ static inline int game_loop(ECS* ecs, RenderContext* render_context, Entity came
 				case SDLK_ESCAPE:
 					run = false;
 					break;
+				case SDLK_b:
+					event_bus_post(event_bus, SYS_SIG(SYS_ANIMATION), 69);
+					break;
 				default:
 					break;
 				}
@@ -81,8 +87,9 @@ static inline int game_loop(ECS* ecs, RenderContext* render_context, Entity came
 			else if (event.type == SDL_QUIT)
 				run = false;
 		}
+		event_bus_dispatch(event_bus, ecs);
 		system_animation_tick(ecs, (float)delta_time);
-		system_movement_tick(ecs, (float)delta_time);
+		system_movement_tick(ecs, event_bus, (float)delta_time);
 		system_render_update(ecs, render_context, camera);
 	}
 	// TODO deinit
@@ -107,10 +114,14 @@ int main()
 	ECS ecs = {};
 	ecs_init(&ecs);
 
+	// Initialise event bus
+	EventBus event_bus = {};
+	event_bus_init(event_bus);
+
 	Entity camera = create_things(&ecs, &resources);
 	printf("Transform size: %u\n", sizeof(Transform));
 	printf("Sprite size: %u\n", sizeof(Sprite));
 	printf("Camera size: %u\n", sizeof(Camera));
 
-	return game_loop(&ecs, &render_context, camera);
+	return game_loop(&ecs, event_bus, &render_context, camera);
 }

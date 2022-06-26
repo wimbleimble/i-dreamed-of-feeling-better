@@ -14,7 +14,8 @@ project(godfeels VERSION 0.0.1
 set(ecs
 	ecs/ecs.c
 	ecs/component.c
-	ecs/entity.c)
+	ecs/entity.c
+	ecs/event_bus.c)
 
 set(renderer
 	renderer/renderer.c
@@ -26,6 +27,7 @@ set(resources
 	resources/stb_image.c)
 
 set(systems
+	systems/system_defs.c
 	systems/system_render.c
 	systems/system_animation.c
 	systems/system_movement.c)

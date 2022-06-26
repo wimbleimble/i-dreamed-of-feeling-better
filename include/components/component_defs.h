@@ -10,14 +10,14 @@
 
 typedef enum ComponentType
 {
-	SPRITE,
-	TRANSFORM,
-	CAMERA,
-	ANIMATION,
-	PLAYER,
-	NUM_COMPONENTS
+	COMP_SPRITE,
+	COMP_TRANSFORM,
+	COMP_CAMERA,
+	COMP_ANIMATION,
+	COMP_PLAYER,
+	COMP_NUM
 } ComponentType;
 
-extern const size_t COMPONENT_SIZES[NUM_COMPONENTS];
+extern const size_t COMPONENT_SIZES[COMP_NUM];
 
 #endif

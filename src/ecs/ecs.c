@@ -25,7 +25,7 @@ void* ecs_assign_component(ECS* ecs, Entity entity, ComponentType type, void* co
 {
 	// TODO check entity exists.
 	// TODO check entity doesn't already have component
-	assert(type < NUM_COMPONENTS);
+	assert(type < COMP_NUM);
 
 	ComponentArray* array = &(ecs->component_data.components[type]);
 	entity_or_signature(&(ecs->entity_data), entity, COMP_SIG(type));
@@ -36,7 +36,7 @@ void* ecs_get_component(ECS* ecs, Entity entity, ComponentType type)
 {
 	// TODO check entity exists.
 	// TODO check entity has component
-	assert(type < NUM_COMPONENTS);
+	assert(type < COMP_NUM);
 	ComponentArray* array = &(ecs->component_data.components[type]);
 
 	return component_array_get(array, entity);

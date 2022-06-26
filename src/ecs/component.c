@@ -63,7 +63,7 @@ void component_entity_destroy(
 	ComponentData* component_data, Entity entity, ComponentSignature signature)
 {
 	// NOTE: signature is mutated.
-	for (ComponentType type = 0; type < NUM_COMPONENTS; ++type)
+	for (ComponentType type = 0; type < COMP_NUM; ++type)
 	{
 		// hehe bitwise shit
 		signature = signature >> type;
@@ -84,7 +84,7 @@ void* component_array_get(ComponentArray* array, Entity entity)
 
 bool component_init(ComponentData* component_data)
 {
-	for (ComponentType type = 0; type < NUM_COMPONENTS; ++type)
+	for (ComponentType type = 0; type < COMP_NUM; ++type)
 	{
 		component_array_init(&(component_data->components[type]), type);
 	}

@@ -17,7 +17,7 @@ typedef struct ComponentArray
 
 typedef struct ComponentData
 {
-	ComponentArray components[NUM_COMPONENTS];
+	ComponentArray components[COMP_NUM];
 } ComponentData;
 
 bool component_init(ComponentData* component_data);

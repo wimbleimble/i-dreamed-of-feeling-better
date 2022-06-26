@@ -2,14 +2,16 @@
 #include <SDL2/SDL.h>
 #include "input.h"
 
-void system_movement_tick(ECS* ecs, float delta_time)
+void system_movement_tick(ECS* ecs, EventBus event_bus, float delta_time)
 {
-	ComponentArray player_array = ecs->component_data.components[PLAYER];
+	ComponentArray player_array = ecs->component_data.components[COMP_PLAYER];
 	for (size_t i = 0; i < player_array.num_components; ++i)
 	{
 		const Entity entity = player_array.index_to_entity[i];
-		const Player* player = (Player*)(player_array.array) + i;
-		Transform* transform = ecs_get_component(ecs, entity, TRANSFORM);
+		Player* player = (Player*)(player_array.array) + i;
+		Transform* transform = ecs_get_component(ecs, entity, COMP_TRANSFORM);
+
+		// TODO add a layer above input to abstract intent.
 		const uint8_t up = input_key_state(SDL_SCANCODE_W)
 			|| input_key_state(SDL_SCANCODE_UP);
 		const uint8_t down = input_key_state(SDL_SCANCODE_S)
@@ -24,7 +26,7 @@ void system_movement_tick(ECS* ecs, float delta_time)
 			0.01f * player->speed
 			* (1.0f + shift * (player->run_mult - 1.0f));
 
-		// Euclid bitch
+		// Euclid, bitch.
 		// Doing it this way means that diagonal speed is very slightly faster
 		// (by a factor of root 2). I could do this a better way by creating a
 		// normalized direction vectory and then mutlipying it by the speed
@@ -33,6 +35,19 @@ void system_movement_tick(ECS* ecs, float delta_time)
 			speed * delta_time * (right - left),
 			speed * delta_time * (up - down),
 		};
+
+		PlayerState state =
+			up
+			| (down << 1)
+			| (left << 2)
+			| (right << 3);
+
+		if (player->state != state)
+		{
+			event_bus_post(event_bus, SYS_SIG(SYS_ANIMATION), 69);
+			player->state = state;
+		}
+
 		vec2 old_pos;
 		glm_vec2_copy(transform->position, old_pos);
 		glm_vec2_add(velocity, old_pos, transform->position);
