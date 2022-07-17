@@ -14,7 +14,7 @@
 // Create Vriska
 // Doesn't matter that this goes out of scope. vriska exists whether you
 // want her to or not. her lifetime is not bound to her relevance.
-void create_vriska(ECS* ecs, Resources* resources)
+Entity create_vriska(ECS* ecs, Resources* resources)
 {
 	ShaderProgram vriska_shader = resources_load_shader(
 		resources, "shaders/sprite.vert", "shaders/sprite.frag");
@@ -38,12 +38,13 @@ void create_vriska(ECS* ecs, Resources* resources)
 		.speed = 35,
 		.run_mult = 1.7f,
 		.state = IDLE});
+
+	return vriska;
 }
 
-Entity create_things(ECS* ecs, Resources* resources)
+Entity create_camera(ECS* ecs, Resources* resources)
 {
 
-	create_vriska(ecs, resources);
 	Entity camera = ecs_create_entity(ecs);
 	ecs_assign_component(ecs, camera, COMP_TRANSFORM,
 		&(Transform){.position = { 0.0f, 0.0f }, .size = { 800.0f, 600.0f }});
@@ -51,7 +52,11 @@ Entity create_things(ECS* ecs, Resources* resources)
 }
 
 static inline int game_loop(
-	ECS* ecs, EventBus event_bus, RenderContext* render_context, Entity camera)
+	ECS* ecs,
+	EventBus event_bus,
+	RenderContext* render_context,
+	Entity camera,
+	Entity vriska)
 {
 	uint64_t curr_time = SDL_GetPerformanceCounter();
 	uint64_t prev_time = 0;
@@ -78,7 +83,8 @@ static inline int game_loop(
 					run = false;
 					break;
 				case SDLK_b:
-					event_bus_post(event_bus, SYS_SIG(SYS_ANIMATION), 69);
+					ecs_remove_component(ecs, vriska, COMP_PLAYER);
+					printf("Removing player component from vriska.\n");
 					break;
 				default:
 					break;
@@ -92,7 +98,6 @@ static inline int game_loop(
 		system_movement_tick(ecs, event_bus, (float)delta_time);
 		system_render_update(ecs, render_context, camera);
 	}
-	// TODO deinit
 
 	return 0;
 
@@ -100,28 +105,21 @@ static inline int game_loop(
 
 int main()
 {
-	// Set up renderer
 	RenderContext render_context = {};
 	assert(renderer_init(&render_context,
 		"I Dreamed of Feeling Better", 800, 600, SDL_WINDOW_OPENGL));
 	renderer_set_clear_colour(1.0, 1.0, 1.0, 1.0);
 
-	// Set up resources
 	Resources resources = {};
 	resources_init(&resources, 1, 1);
 
-	// Initialise ECS
 	ECS ecs = {};
 	ecs_init(&ecs);
 
-	// Initialise event bus
 	EventBus event_bus = {};
 	event_bus_init(event_bus);
 
-	Entity camera = create_things(&ecs, &resources);
-	printf("Transform size: %u\n", sizeof(Transform));
-	printf("Sprite size: %u\n", sizeof(Sprite));
-	printf("Camera size: %u\n", sizeof(Camera));
-
-	return game_loop(&ecs, event_bus, &render_context, camera);
+	Entity camera = create_camera(&ecs, &resources);
+	Entity vriska = create_vriska(&ecs, &resources);
+	return game_loop(&ecs, event_bus, &render_context, camera, vriska);
 }

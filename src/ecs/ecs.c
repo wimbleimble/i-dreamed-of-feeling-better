@@ -32,6 +32,13 @@ void* ecs_assign_component(ECS* ecs, Entity entity, ComponentType type, void* co
 	return component_array_append(array, component, entity);
 }
 
+void ecs_remove_component(ECS* ecs, Entity entity, ComponentType type)
+{
+	ComponentSignature entity_sig = ecs->entity_data.entity_signatures[entity];
+	component_array_remove(ecs->component_data.components + type, entity, entity_sig);
+	ecs->entity_data.entity_signatures[entity] = entity_sig ^ COMP_SIG(type);
+}
+
 void* ecs_get_component(ECS* ecs, Entity entity, ComponentType type)
 {
 	// TODO check entity exists.

@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
+#include <string.h>
 
 bool component_array_init(
 	ComponentArray* array,
@@ -53,25 +54,38 @@ void* component_array_append(ComponentArray* array, void* component, Entity enti
 	return new_comp;
 }
 
-void component_array_remove(ComponentArray* array, Entity entity)
+void component_array_remove(
+	ComponentArray* array, Entity entity, ComponentSignature signature)
 {
-	// TODO Implement me.
-	printf("Removing component %u for entity %u\n", array->type, entity);
+	assert((COMP_SIG(array->type) & signature)
+		&& "Entity doesn't have component.");
+
+	const size_t index = array->entity_to_index[entity];
+	uint8_t* comp_ptr = (uint8_t*)array->array + index;
+
+	memset(comp_ptr, 0, array->component_size);
+
+	const size_t num_past = --array->num_components - index;
+
+	// warning - leaves garbage behind at the end of the array. shouldn't
+	// matter, but could mean weirdness if something goes wrong elsewhere.
+	if(num_past)
+		memmove(comp_ptr, comp_ptr + 1, num_past * array->component_size);
 }
 
 void component_entity_destroy(
 	ComponentData* component_data, Entity entity, ComponentSignature signature)
 {
-	// NOTE: signature is mutated.
+	ComponentSignature trash = signature;
 	for (ComponentType type = 0; type < COMP_NUM; ++type)
 	{
 		// hehe bitwise shit
-		signature = signature >> type;
-		if (signature & (ComponentSignature)1)
-			component_array_remove(&(component_data->components[type]), entity);
+		trash = trash >> type;
+		if (trash & (ComponentSignature)1)
+			component_array_remove(
+				&(component_data->components[type]), entity, signature);
 	}
 }
-
 
 void* component_array_get(ComponentArray* array, Entity entity)
 {

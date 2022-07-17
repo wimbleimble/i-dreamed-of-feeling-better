@@ -23,6 +23,8 @@
 		"common.h": "c",
 		"vec2-ext.h": "c",
 		"rect.h": "c",
-		"system.h": "c"
+		"system.h": "c",
+		"entity.h": "c",
+		"string.h": "c"
 	}
 }

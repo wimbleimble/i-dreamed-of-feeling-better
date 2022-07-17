@@ -5,8 +5,7 @@
 #include "component_defs.h"
 #include "entity.h"
 
-typedef struct ComponentArray
-{
+typedef struct ComponentArray {
 	size_t component_size;
 	size_t num_components;
 	ComponentType type;
@@ -15,8 +14,7 @@ typedef struct ComponentArray
 	Entity* index_to_entity;
 } ComponentArray;
 
-typedef struct ComponentData
-{
+typedef struct ComponentData {
 	ComponentArray components[COMP_NUM];
 } ComponentData;
 
@@ -25,6 +23,8 @@ void* component_new(ComponentType type, void* compoenent);
 void* component_array_append(ComponentArray* array, void* component, Entity entity);
 void* component_array_get(ComponentArray* array, Entity entity);
 void component_entity_destroy(ComponentData* component_data, Entity entity, ComponentSignature signature);
+void component_array_remove(
+	ComponentArray* array, Entity entity, ComponentSignature signature);
 
 #define COMP_SIG(type) ((ComponentSignature)(1UL << type))
 #endif
