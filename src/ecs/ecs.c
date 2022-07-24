@@ -49,4 +49,3 @@ void* ecs_get_component(ECS* ecs, Entity entity, ComponentType type)
 	return component_array_get(array, entity);
 
 }
-

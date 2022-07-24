@@ -4,7 +4,6 @@
 #include <stddef.h>
 #include <assert.h>
 
-
 //-- Queue Functions -----------------------------------------------------------
 bool id_queue_push(EntityData* entity_data, Entity entity)
 {

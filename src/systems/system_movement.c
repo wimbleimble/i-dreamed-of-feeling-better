@@ -26,7 +26,7 @@ void system_movement_tick(ECS* ecs, EventBus event_bus, float delta_time)
 			0.01f * player->speed
 			* (1.0f + shift * (player->run_mult - 1.0f));
 
-		// Euclid, bitch.
+		// Euler, bitch.
 		// Doing it this way means that diagonal speed is very slightly faster
 		// (by a factor of root 2). I could do this a better way by creating a
 		// normalized direction vectory and then mutlipying it by the speed
