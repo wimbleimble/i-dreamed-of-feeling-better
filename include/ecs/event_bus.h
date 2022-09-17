@@ -4,21 +4,20 @@
 
 #define BUS_CAPACITY 512
 
-// I don't like this
-// events can't hold data. they can only inform that something happens, the
-// event handlers have to get the data themselves.
-typedef uint64_t Event;
-
 typedef struct EventBuffer {
-	Event* head;
-	Event* tail;
-	Event* buffer;
+	void* head;
+	void* tail;
+	void* buffer;
 } EventBuffer;
 
-typedef EventBuffer EventBus[SYS_NUM];
+typedef struct EventBus {
+	size_t event_size;
+	// TODO Dynamic?
+	EventBuffer buffers[SYS_NUM];
+} EventBus;
 
-void event_bus_init(EventBus bus);
-void event_bus_post(EventBus bus, SystemSignature destination, Event event);
-void event_bus_dispatch(EventBus bus, ECS* ecs);
+void event_bus_init(EventBus* bus);
+void event_bus_post(EventBus* bus, SystemSignature destination, void* event);
+void event_bus_dispatch(EventBus* bus, ECS* ecs);
 
 #endif

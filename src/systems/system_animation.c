@@ -1,6 +1,6 @@
 #include "system_animation.h"
 
-void system_animation_event(ECS* ecs, Event event)
+void system_animation_event(ECS* ecs, void* event)
 {
 	ComponentArray player_array = ecs->component_data.components[COMP_PLAYER];
 	for (size_t i = 0; i < player_array.num_components; ++i)

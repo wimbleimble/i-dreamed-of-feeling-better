@@ -1,0 +1,82 @@
+[
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/ecs/ecs.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/ecs.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/ecs.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/ecs/component.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/component.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/component.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/ecs/entity.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/entity.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/entity.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/ecs/event_bus.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/event_bus.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/ecs/event_bus.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/renderer/renderer.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/renderer/renderer.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/renderer/renderer.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/renderer/shader.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/renderer/shader.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/renderer/shader.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/renderer/texture.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/renderer/texture.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/renderer/texture.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/resources/resources.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/resources/resources.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/resources/resources.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/resources/stb_image.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/resources/stb_image.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/resources/stb_image.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/main.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/main.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/main.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/component_defs.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/component_defs.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/component_defs.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/systems/system_defs.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_defs.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_defs.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/systems/system_render.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_render.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_render.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/systems/system_animation.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_animation.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_animation.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/systems/system_movement.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_movement.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/systems/system_movement.c"
+},
+{
+  "directory": "/home/wimbl/src/i-dreamed-of-feeling-better/build",
+  "command": "/sbin/cc  -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/renderer -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/resources -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/ecs -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/systems -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../include/components -I/home/wimbl/src/i-dreamed-of-feeling-better/src/../lib/stb -isystem /usr/include/SDL2 -g -o CMakeFiles/godfeels.dir/input.c.o -c /home/wimbl/src/i-dreamed-of-feeling-better/src/input.c",
+  "file": "/home/wimbl/src/i-dreamed-of-feeling-better/src/input.c"
+}
+]

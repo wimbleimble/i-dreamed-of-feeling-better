@@ -2,7 +2,7 @@
 #include <SDL2/SDL.h>
 #include "input.h"
 
-void system_movement_tick(ECS* ecs, EventBus event_bus, float delta_time)
+void system_movement_tick(ECS* ecs, EventBus* event_bus, float delta_time)
 {
 	ComponentArray player_array = ecs->component_data.components[COMP_PLAYER];
 	for (size_t i = 0; i < player_array.num_components; ++i)
@@ -44,7 +44,8 @@ void system_movement_tick(ECS* ecs, EventBus event_bus, float delta_time)
 
 		if (player->state != state)
 		{
-			event_bus_post(event_bus, SYS_SIG(SYS_ANIMATION), 69);
+			uint64_t event = 69;
+			event_bus_post(event_bus, SYS_SIG(SYS_ANIMATION), &event);
 			player->state = state;
 		}
 

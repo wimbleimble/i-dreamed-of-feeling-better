@@ -8,3 +8,4 @@ void main()
 {
 	color = texture(sprite, texture_coords);
 }
+

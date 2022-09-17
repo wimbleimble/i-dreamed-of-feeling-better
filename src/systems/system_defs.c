@@ -4,7 +4,7 @@
 #include "system_render.h"
 
 const EventHandler EVENT_HANDLERS[SYS_NUM] = {
-   NULL, // Render
+    NULL,                   // Render
 	system_animation_event, // Animation
-	NULL  // Movement
+	NULL                    // Movement
 };

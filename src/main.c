@@ -53,7 +53,7 @@ Entity create_camera(ECS* ecs, Resources* resources)
 
 static inline int game_loop(
 	ECS* ecs,
-	EventBus event_bus,
+	EventBus* notif_bus,
 	RenderContext* render_context,
 	Entity camera,
 	Entity vriska)
@@ -93,9 +93,9 @@ static inline int game_loop(
 			else if (event.type == SDL_QUIT)
 				run = false;
 		}
-		event_bus_dispatch(event_bus, ecs);
+		event_bus_dispatch(notif_bus, ecs);
 		system_animation_tick(ecs, (float)delta_time);
-		system_movement_tick(ecs, event_bus, (float)delta_time);
+		system_movement_tick(ecs, notif_bus, (float)delta_time);
 		system_render_update(ecs, render_context, camera);
 	}
 
@@ -116,10 +116,10 @@ int main()
 	ECS ecs = {};
 	ecs_init(&ecs);
 
-	EventBus event_bus = {};
-	event_bus_init(event_bus);
+	EventBus notif_bus = { .event_size = sizeof(uint64_t) };
+	event_bus_init(&notif_bus);
 
 	Entity camera = create_camera(&ecs, &resources);
 	Entity vriska = create_vriska(&ecs, &resources);
-	return game_loop(&ecs, event_bus, &render_context, camera, vriska);
+	return game_loop(&ecs, &notif_bus, &render_context, camera, vriska);
 }

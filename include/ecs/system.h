@@ -7,5 +7,5 @@
 typedef uint32_t SystemSignature;
 #define SYS_SIG(type) ((SystemSignature)(1UL << type))
 
-typedef void (*EventHandler)(ECS*, uint64_t);
+typedef void (*EventHandler)(ECS*, void*);
 #endif
