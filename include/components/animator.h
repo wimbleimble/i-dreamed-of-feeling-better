@@ -1,9 +1,10 @@
-#ifndef ANIMATION_H
-#define ANIMATION_H
+#ifndef ANIMATOR_H
+#define ANIMATOR_H
 #include <stdint.h>
+#include "animations.h"
 
 // TODO think about sizes here
-typedef struct Animation {
+typedef struct Animator {
 	// Animation State
 	uint8_t fps;
 	uint8_t current_frame;
@@ -11,9 +12,8 @@ typedef struct Animation {
 
 	// Animation Defintions
 	uint8_t sheet_frames;
-	uint8_t start_frame;
-	uint8_t num_frames;
+    Animation current_animation;
 
-} Animation;
+} Animator;
 
 #endif

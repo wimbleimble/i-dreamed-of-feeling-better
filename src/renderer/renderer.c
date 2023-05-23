@@ -49,7 +49,7 @@ bool renderer_init(
 
 	// TODO optional vsync
 	// Uncomment me to make fps go pchooooo
-	//SDL_GL_SetSwapInterval(0);
+	// SDL_GL_SetSwapInterval(0);
 
 	// Initialise GLEW
 	GLenum err = glewInit();

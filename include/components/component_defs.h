@@ -5,7 +5,8 @@
 #include "sprite.h"
 #include "transform.h"
 #include "camera.h"
-#include "animation.h"
+#include "animator.h"
+#include "animations.h"
 #include "player.h"
 
 typedef enum ComponentType
@@ -13,7 +14,8 @@ typedef enum ComponentType
 	COMP_SPRITE,
 	COMP_TRANSFORM,
 	COMP_CAMERA,
-	COMP_ANIMATION,
+	COMP_ANIMATOR,
+    COMP_ANIMATIONS,
 	COMP_PLAYER,
 	COMP_NUM
 } ComponentType;

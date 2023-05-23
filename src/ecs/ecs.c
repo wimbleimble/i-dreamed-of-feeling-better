@@ -7,6 +7,7 @@ bool ecs_init(ECS* ecs)
 {
 	entity_init(&(ecs->entity_data));
 	component_init(&(ecs->component_data));
+    return true;
 }
 
 bool ecs_destroy_entity(ECS* ecs, Entity entity)
